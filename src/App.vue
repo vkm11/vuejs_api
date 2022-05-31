@@ -1,17 +1,27 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+<h1>Call API</h1>
+<p v-for ="item in list" :key="item" >
+{{item.id}} --- {{item.email}} --- {{item.first_name}}
+</p>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import axios from 'axios';
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+   name: "App",
+    data()
+    {
+        return{
+            list:[]
+        }
+    },
+    async mounted()
+    {
+        let result = await axios.get("https://reqres.in/api/users?page=1");
+        console.log("Api data",result.data.data);
+        this.list =result.data.data;
+    }
+};
 </script>
 
 <style>
@@ -19,7 +29,7 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  /* text-align: center; */
   color: #2c3e50;
   margin-top: 60px;
 }
